@@ -1,0 +1,11 @@
+model:
+  hf_token: "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"
+  synth_vodel: "Vikhrmodels/Vikhr-Llama-3.2-1B-Instruct-abliterated"
+  attack_model: "Qwen/Qwen2.5-1.5B"
+  temperature: 1
+  gpu_memory_utilization: 0.85
+
+api: 
+  openai_key: "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"
+  api_base: "http://localhost:7986/v1"
+  port: 7986
