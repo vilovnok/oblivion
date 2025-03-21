@@ -1,6 +1,6 @@
 model:
   hf_token: "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"
-  synth_vodel: "Vikhrmodels/Vikhr-Llama-3.2-1B-Instruct-abliterated"
+  synth_model: "Vikhrmodels/Vikhr-Llama-3.2-1B-Instruct-abliterated"
   attack_model: "Qwen/Qwen2.5-1.5B"
   temperature: 1
   gpu_memory_utilization: 0.85
