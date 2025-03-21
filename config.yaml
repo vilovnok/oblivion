@@ -5,7 +5,7 @@ model:
   temperature: 1
   gpu_memory_utilization: 0.85
 
-  qwen: "Qwen/Qwen2.5-VL-7B-Instruct"
+  qwen: "Qwen/Qwen2.5-7B-Instruct"
 
 api: 
   openai_key: "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"
