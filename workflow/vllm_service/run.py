@@ -15,7 +15,7 @@ def run(cfg: DictConfig):
         "python", "-m", "vllm.entrypoints.openai.api_server",
         "--model", cfg.model.synth_model,
         "--gpu-memory-utilization", str(cfg.model.gpu_memory_utilization),
-        "--port", str(cfg.api.port_another)
+        "--port", str(cfg.api.port)
     ]
     subprocess.run(command)
 
