@@ -6,3 +6,8 @@ dataset.csv
 dataset/
 llamator-prompt-leakage/
 aiapwn
+
+*.csv
+
+__pycache__/
+*.pyc

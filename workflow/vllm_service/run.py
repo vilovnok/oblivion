@@ -13,7 +13,7 @@ def run(cfg: DictConfig):
     
     command = [
         "python", "-m", "vllm.entrypoints.openai.api_server",
-        "--model", cfg.model.synth_model,
+        "--model", cfg.model.qwen,
         "--gpu-memory-utilization", str(cfg.model.gpu_memory_utilization),
         "--port", str(cfg.api.port_another)
     ]

@@ -42,9 +42,7 @@ class OpenAIClient:
             print(f"Other error occurred: {e}")
 
     def Completion(self, prompt:str, content:str):
-        formatted_user_input = self.get_completion_from_messages(input_text=content, delimiter='#'*3)    
-        prompt = prompt.replace('{context}',formatted_user_input)
-
+        prompt = prompt.replace('{context}', content)
         try:
             response = openai.Completion.create(
                 model=self.model,
@@ -52,7 +50,7 @@ class OpenAIClient:
                 prompt = prompt,
                 max_tokens=1024,
             )
-            return self.fix_response(response["choices"][0]["text"]) 
+            return response["choices"][0]["text"]
         except Exception as error:
             print(f"Ошибка при вызове OpenAI:\n{error}")
         except openai.error.InvalidRequestError as e:
