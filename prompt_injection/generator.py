@@ -18,7 +18,6 @@ class Generator(Tokenizer):
             df = self.txt2df(file_path=file_path)            
         
         self.df = df
-        print(self.df.shape)
 
     @staticmethod
     def read_file(file_path: str):
