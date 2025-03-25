@@ -1941,6 +1941,19 @@ files = [
 langchain-core = ">=0.3.34,<1.0.0"
 
 [[package]]
+name = "langid"
+version = "1.1.6"
+description = "langid.py is a standalone Language Identification (LangID) tool."
+optional = false
+python-versions = "*"
+files = [
+    {file = "langid-1.1.6.tar.gz", hash = "sha256:044bcae1912dab85c33d8e98f2811b8f4ff1213e5e9a9e9510137b84da2cb293"},
+]
+
+[package.dependencies]
+numpy = "*"
+
+[[package]]
 name = "langsmith"
 version = "0.3.15"
 description = "Client library to connect to the LangSmith LLM Tracing and Evaluation Platform."
@@ -5228,4 +5241,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "5da35232a4e361fe9db39f10acb90e1fc4d44485f6a0d6bb3184fad5d76992b7"
+content-hash = "4d951aaccd3766796b1ffed010149dad013bd28ab89daffbd262c1f738d3e187"
