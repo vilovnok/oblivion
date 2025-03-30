@@ -15,7 +15,15 @@ class OpenAIClient:
         self.client = openai
 
 
-    def ChatCompletion(self, system_prompt:str, query:str):        
+    def ChatCompletion(self, system_prompt:str, query:str):      
+        
+        print("*"*100)
+        print(f"{system_prompt}")
+        print("*"*100)  
+        print("*"*100)
+        print(f"{query}")
+        print("*"*100)  
+
         try:
             messages=[ 
                 {"role": "system", "content": system_prompt}, 
@@ -33,12 +41,12 @@ class OpenAIClient:
             answer = response["choices"][0]["message"]["content"]
             return answer
 
-        except openai.error.InvalidRequestError as e:
-            print(f"Invalid request: {e}")
-        except openai.error.RateLimitError as e:
-            print(f"Rate limit exceeded: {e}")
-        except openai.error.OpenAIError as e:
-            print(f"OpenAI error: {e}")        
+        # except openai.error.InvalidRequestError as e:
+        #     print(f"Invalid request: {e}")
+        # except openai.error.RateLimitError as e:
+        #     print(f"Rate limit exceeded: {e}")
+        # except openai.error.OpenAIError as e:
+        #     print(f"OpenAI error: {e}")        
         except Exception as e:
             print(f"Other error occurred: {e}")
 
@@ -54,14 +62,14 @@ class OpenAIClient:
             return response["choices"][0]["text"]
         except Exception as error:
             print(f"Ошибка при вызове OpenAI:\n{error}")
-        except openai.error.InvalidRequestError as e:
-            print(f"Invalid request: {e}")
-        except openai.error.RateLimitError as e:
-            print(f"Rate limit exceeded: {e}")
-        except openai.error.OpenAIError as e:
-            print(f"OpenAI error: {e}")        
-        except Exception as e:
-            print(f"Other error occurred: {e}")
+        # except openai.error.InvalidRequestError as e:
+        #     print(f"Invalid request: {e}")
+        # except openai.error.RateLimitError as e:
+        #     print(f"Rate limit exceeded: {e}")
+        # except openai.error.OpenAIError as e:
+        #     print(f"OpenAI error: {e}")        
+        # except Exception as e:
+        #     print(f"Other error occurred: {e}")
 
     def invoke(self, prompt: str, content:str):
         try:

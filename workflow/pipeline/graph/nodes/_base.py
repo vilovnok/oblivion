@@ -17,9 +17,9 @@ class _BaseNode(ABC):
             description: str,
             llm: _BaseLLM,
             prompt: list[str] | str = "",
-            output_parser: BaseOutputParser = StrOutputParser(),
-            port: int = 7986,
-            model_name: str = None
+            output_parser: BaseOutputParser = StrOutputParser(),            
+            model_name: str = None,
+            port: int = None,
         ) -> None:
         
         self.name = name

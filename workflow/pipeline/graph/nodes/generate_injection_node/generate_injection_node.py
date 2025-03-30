@@ -6,6 +6,7 @@ from workflow.pipeline.graph.state import State
 
 import pandas as pd
 
+from .prompt import prompt
 
 
 
@@ -19,12 +20,13 @@ class GenerateInjectionNode(_BaseNode):
         name: str,
         description: str,
         llm: _BaseLLM,
-        prompt: str = None,
+        prompt: str = prompt,
         output_parser: BaseOutputParser = StrOutputParser(),
         show_logs: bool = False,
         model_name: str = "Vikhrmodels/Vikhr-Llama-3.2-1B-Instruct-abliterated",
+        port: int = 7986
     ) -> None:
-        super().__init__(name, description, llm, prompt, output_parser, model_name)
+        super().__init__(name, description, llm, prompt, output_parser, model_name, port=port)
         self.show_logs = show_logs
 
     def create_questions(self, texts: list[str]) -> list[str]:

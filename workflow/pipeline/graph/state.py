@@ -6,6 +6,6 @@ from langchain_core.messages import BaseMessage
 
 
 class State(BaseModel):
-    df: Optional[pd.DataFrame] = None
+    df: Optional[object] = None
     label: Optional[str] = None 
     history: List[BaseMessage]
