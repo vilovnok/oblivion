@@ -10,5 +10,3 @@ class DialogGen:
     def generate(self):
         return
 
-
-    

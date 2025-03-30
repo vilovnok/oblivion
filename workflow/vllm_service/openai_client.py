@@ -2,9 +2,10 @@ import openai
 
 
 class OpenAIClient:
-    def __init__(self, model: str, openai_key: str, port: str):    
+    def __init__(self, port: str, model_name: str=None, openai_key: str=None):    
 
-        self.model = model        
+        openai_key="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"
+        self.model_name = model_name        
         self.__setup_openai(api_key=openai_key, port=port) 
     
     def __setup_openai(self, api_key:str, port:str):
@@ -14,15 +15,15 @@ class OpenAIClient:
         self.client = openai
 
 
-    def ChatCompletion(self, system_prompt:str, prompt:str):        
+    def ChatCompletion(self, system_prompt:str, query:str):        
         try:
             messages=[ 
                 {"role": "system", "content": system_prompt}, 
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": query}
             ]
 
             response = self.client.ChatCompletion.create(
-                model=self.model,
+                model=self.model_name,
                 temperature=0.2,
                 frequency_penalty=0.2,
                 max_tokens=1024,
@@ -45,7 +46,7 @@ class OpenAIClient:
         prompt = prompt.replace('{context}', content)
         try:
             response = openai.Completion.create(
-                model=self.model,
+                model=self.model_name,
                 temperature=0.0,
                 prompt = prompt,
                 max_tokens=1024,
@@ -65,7 +66,7 @@ class OpenAIClient:
     def invoke(self, prompt: str, content:str):
         try:
             response = openai.ChatCompletion.create(
-                model=self.model,
+                model=self.model_name,
                 temperature=0.2,
                 frequency_penalty=0.2,
                 max_tokens=784,

@@ -5,6 +5,8 @@ model:
   temperature: 1
   gpu_memory_utilization: 0.85
 
+  cls_model: "cgoosen/prompt-tackler"
+
   qwen: "Qwen/Qwen2.5-7B-Instruct"
 
 api: 
