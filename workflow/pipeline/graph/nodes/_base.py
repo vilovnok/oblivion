@@ -1,13 +1,12 @@
 from typing import Dict, List
 from abc import ABC
 
-from langchain_core.output_parsers import StrOutputParser, BaseOutputParser
-from langchain_core.messages import FunctionMessage, BaseMessage
-from langchain_core.prompts import PromptTemplate
 
-from workflow.pipeline.graph.llms._base import _BaseLLM
-from workflow.pipeline.graph.state import State
+from langchain_core.messages import FunctionMessage, BaseMessage
+
 from workflow.vllm_service.openai_client import OpenAIClient
+from workflow.pipeline.graph.state import State
+
 
 
 class _BaseNode(ABC):
@@ -15,16 +14,14 @@ class _BaseNode(ABC):
             self,
             name: str,
             description: str,
-            llm: _BaseLLM,
+            port: int = 7987,
             prompt: list[str] | str = "",
-            output_parser: BaseOutputParser = StrOutputParser(),            
-            model_name: str = None,
-            port: int = None,
+            model_name: str = "Qwen/Qwen2.5-7B-Instruct",
         ) -> None:
         
         self.name = name
         self.description = description
-        self.chain = None # PromptTemplate.from_template(prompt) | llm.llm | output_parser
+        
         self.vllm = VLLMAdapter(prompt=prompt, model_name=model_name, port=port)
 
     def get_summary(self, history: List[BaseMessage]):
@@ -56,15 +53,19 @@ class _BaseRouter(ABC):
 
 class VLLMAdapter(ABC):
     def __init__(self, prompt:str, model_name: str, port: int):
+        
         self.prompt = prompt
-
         self._setupVLLM(model_name=model_name, port=port)
 
-    def _setupVLLM(self, model_name: str, port: int):            
+    def _setupVLLM(self, model_name: str, port: int):   
         self.vllm_client = OpenAIClient(model_name=model_name, port=port)        
     
     def ChatCompletion(self, query: str):
         response = self.vllm_client.ChatCompletion(system_prompt=self.prompt, query=query)
+        return response
+    
+    def ChatCompletionEnh(self, system_prompt:str, query: str):
+        response = self.vllm_client.ChatCompletion(system_prompt=system_prompt, query=query)
         return response
     
     def Completion(self, content: str, prompt:str=None,):

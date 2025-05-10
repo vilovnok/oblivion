@@ -14,12 +14,12 @@ class ClassifierNode(_BaseNode):
         self,
         name: str,
         description: str,
-        llm: _BaseLLM,
         prompt: str = None,
-        output_parser: BaseOutputParser = StrOutputParser(),
+        model_name: str = "Qwen/Qwen2.5-7B-Instruct",
+        port: int = 7987,
         show_logs: bool = False,
     ) -> None:
-        super().__init__(name, description, llm, prompt, output_parser)
+        super().__init__(name=name, description=description, prompt=prompt, model_name=model_name, port=port)
         self.show_logs = show_logs
 
     def invoke(self, state: State):

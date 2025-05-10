@@ -1,68 +1,57 @@
-from langchain_core.output_parsers import StrOutputParser, BaseOutputParser
-
 from workflow.pipeline.graph.nodes._base import _BaseNode
-from workflow.pipeline.graph.llms._base import _BaseLLM
+from workflow.generator.generator import Generator
 from workflow.pipeline.graph.state import State
 
-import pandas as pd
+from langchain_core.messages import AIMessage
 
 from .prompt import prompt
 
-
+import pandas as pd
 
 class GenerateInjectionNode(_BaseNode):
     """
     
     """
-
     def __init__(
         self,
         name: str,
         description: str,
-        llm: _BaseLLM,
         prompt: str = prompt,
-        output_parser: BaseOutputParser = StrOutputParser(),
         show_logs: bool = False,
-        model_name: str = "Vikhrmodels/Vikhr-Llama-3.2-1B-Instruct-abliterated",
-        port: int = 7986
+        port: int = 7987,
+        model_name: str = "Qwen/Qwen2.5-7B-Instruct",
     ) -> None:
-        super().__init__(name, description, llm, prompt, output_parser, model_name, port=port)
+        super().__init__(name=name, description=description, prompt=prompt, model_name=model_name, port=port)
         self.show_logs = show_logs
 
-    def create_questions(self, texts: list[str]) -> list[str]:
-        questions = []
-        for text in texts:
-            prompt_injection = self.vllm.ChatCompletion(query=text)
-            questions.append(prompt_injection)
+    def create_actions(self, df: pd.DataFrame) -> list[str]:
+        generator = Generator(df=df)        
+        df_0_25 = generator.generate_prompt(funlike='circled', percentage_range=[0.0, 0.25], addition_prompt=True)
+        df_25_50 = generator.generate_prompt(funlike='space', percentage_range=[0.25, 0.5], addition_prompt=True)
+        df_50_75 = generator.generate_prompt(funlike='unicode', percentage_range=[0.5, 0.75], addition_prompt=True)
+        df_75_1 = generator.generate_prompt(funlike='txt', percentage_range=[0.75, 1.0], addition_prompt=True)
+
         
-        return questions
-
-    # def create_questions(self, texts: list[str]) -> list[str]:
-    #     questions = []
-    #     for text in texts:
-    #         prompt_injection = self.vllm.ChatCompletion(query=text)
-    #         questions.append(prompt_injection)
+        df_full = pd.DataFrame({"prompt_injection":(df_0_25['prefixes_circled'].to_list() + 
+                                                    df_25_50['prefixes_space'].to_list() + 
+                                                    df_50_75['prefixes_unicode'].to_list() + 
+                                                    df_75_1['prefixes_txt'].to_list())})
         
-    #     return questions
-
-
+        
+        return df_full['prompt_injection'].to_list()
 
     def invoke(self, state: State):
+        texts = state.history[-1].content        
+        df = pd.DataFrame({'action': texts})
 
-        texts = state.history[-1].content
-        prompts_injection = []
-
-        questions = self.create_questions(texts=texts)
-
-        print('*'*100)
-        print(questions)
-        print('*'*100)
-
-        # df = pd.DataFrame({'prompt': texts, 'prompt_injection': prompts_injection})
+        print(df.shape)
+        
+        responses = self.create_actions(df=df)
+        state.history.append(AIMessage(name=self.name, content=responses)) 
 
         if self.show_logs:
             print(self.name)            
-            # print(f"Shape of DataFrame: {df.shape}")
+            print(f"Shape of DataFrame: {len(responses)}")
             print("----------------")
 
-        return {"df": state.df}
+        return {"history": state.history}

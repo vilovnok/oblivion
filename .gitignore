@@ -1,5 +1,6 @@
 /SecLists
 .venv
+.env
 synth
 outputs
 dataset.csv
@@ -8,6 +9,9 @@ llamator-prompt-leakage/
 aiapwn
 
 *.csv
+*.lock
 
 __pycache__/
 *.pyc
+
+Fine_*

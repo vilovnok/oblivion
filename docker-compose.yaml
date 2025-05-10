@@ -6,9 +6,3 @@ services:
     image: qdrant/qdrant:latest
     ports:
       - "6333:6333"
-    # volumes:
-    #   - qdrant_storage:/qdrant/storage
-
-# volumes:
-#   qdrant_storage:
-#     driver: local

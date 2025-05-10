@@ -4,7 +4,6 @@ from tqdm import tqdm
 
 from transformers import pipeline
 from transformers import AutoTokenizer
-from transformers.pipelines.text_classification import TextClassificationPipeline
 
 
 class Engine:
@@ -21,13 +20,11 @@ class Engine:
             device="cuda" if torch.cuda.is_available() else "cpu"
     )
 
-
-    def classification(self, df: pd.DataFrame, batch_size:int=8, max_tokens:int=512):    
+    def classification(self, df: pd.DataFrame, column_name:str='text', batch_size:int=8, max_tokens:int=512):    
         """
         Prompt classification
         """
-        df = df.reset_index(drop=False)
-        
+        df = df.reset_index(drop=False)        
         results = []
         
         for batch_start in tqdm(range(0, len(df), batch_size), desc="Классификация", unit="batch"):        
@@ -38,9 +35,9 @@ class Engine:
             batch_indexes = []
 
             for _, row in batch.iterrows():
-                tokens = self.__tokenizer(row['text'], truncation=True, return_tensors="pt")
+                tokens = self.__tokenizer(row[column_name], truncation=True, return_tensors="pt")
                 if len(tokens.input_ids[0]) <= max_tokens:
-                    batch_texts.append(row['text'])
+                    batch_texts.append(row[column_name])
                     batch_indexes.append(row['index'])
             
             batch_results = self.__classifier(batch_texts)            

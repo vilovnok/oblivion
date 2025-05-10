@@ -1,29 +1,23 @@
+import os
 import openai
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 class OpenAIClient:
-    def __init__(self, port: str, model_name: str=None, openai_key: str=None):    
+    def __init__(self, port: int, model_name: str=None, openai_key: str=None):    
 
-        openai_key="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"
+        openai_key=os.getenv('OPENAPI_KEY')
         self.model_name = model_name        
         self.__setup_openai(api_key=openai_key, port=port) 
     
     def __setup_openai(self, api_key:str, port:str):
         openai.api_key = api_key
-        openai.api_base = f"http://localhost:{port}/v1"
-
+        openai.api_base = f"http://0.0.0.0:{port}/v1"
         self.client = openai
 
-
     def ChatCompletion(self, system_prompt:str, query:str):      
-        
-        print("*"*100)
-        print(f"{system_prompt}")
-        print("*"*100)  
-        print("*"*100)
-        print(f"{query}")
-        print("*"*100)  
-
         try:
             messages=[ 
                 {"role": "system", "content": system_prompt}, 
@@ -39,19 +33,12 @@ class OpenAIClient:
                 messages=messages
             )            
             answer = response["choices"][0]["message"]["content"]
-            return answer
-
-        # except openai.error.InvalidRequestError as e:
-        #     print(f"Invalid request: {e}")
-        # except openai.error.RateLimitError as e:
-        #     print(f"Rate limit exceeded: {e}")
-        # except openai.error.OpenAIError as e:
-        #     print(f"OpenAI error: {e}")        
+            return answer   
         except Exception as e:
             print(f"Other error occurred: {e}")
 
     def Completion(self, prompt:str, content:str):
-        prompt = prompt.replace('{context}', content)
+        prompt = prompt.replace('{content}', content)
         try:
             response = openai.Completion.create(
                 model=self.model_name,
@@ -62,14 +49,6 @@ class OpenAIClient:
             return response["choices"][0]["text"]
         except Exception as error:
             print(f"Ошибка при вызове OpenAI:\n{error}")
-        # except openai.error.InvalidRequestError as e:
-        #     print(f"Invalid request: {e}")
-        # except openai.error.RateLimitError as e:
-        #     print(f"Rate limit exceeded: {e}")
-        # except openai.error.OpenAIError as e:
-        #     print(f"OpenAI error: {e}")        
-        # except Exception as e:
-        #     print(f"Other error occurred: {e}")
 
     def invoke(self, prompt: str, content:str):
         try:
