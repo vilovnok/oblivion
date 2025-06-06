@@ -18,6 +18,8 @@ deepeval = "^2.5.9"
 langid = "^1.1.6"
 langgraph = "^0.3.21"
 langchain-ollama = "^0.3.0"
+ragas = "^0.2.15"
+sacrebleu = "^2.5.1"
 
 
 [tool.poetry.group.dev.dependencies]

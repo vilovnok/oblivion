@@ -7,11 +7,12 @@ dataset.csv
 dataset/
 llamator-prompt-leakage/
 aiapwn
-
+temp_repo/
 *.csv
 *.lock
 
 __pycache__/
 *.pyc
-
+*.ipynb
 Fine_*
+pybook/stage_2.ipynb
