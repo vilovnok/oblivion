@@ -13,6 +13,6 @@ temp_repo/
 
 __pycache__/
 *.pyc
-*.ipynb
+del.ipynb
 Fine_*
 pybook/stage_2.ipynb
