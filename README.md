@@ -29,5 +29,5 @@ Oblivion is a research project focused on developing an offensive language model
 
 
 ## Result
-Datsets: [dataset1](https://huggingface.co/datasets/r1char9/sft-prompt2prompt-injection-dataset) | [dataset2](https://huggingface.co/datasets/r1char9/prompt-2-prompt-injection) | [dataset3](#) | [dataset4](https://huggingface.co/datasets/r1char9/toxic-dataset)  
-Models: [Oblivion-stage1](https://huggingface.co/r1char9/Oblivion2.5-1.5B-adapter) | [Oblivion-stage2](#) | [Oblivion-stage3](#)  
+Datsets: [dataset1](https://huggingface.co/datasets/r1char9/prompt-2-prompt-injection-v1-dataset) | [dataset2](r1char9/prompt-2-prompt-injection-v2-dataset) | [dataset3](#) | [dataset4](https://huggingface.co/datasets/r1char9/toxic-dataset)  
+Models: [Oblivion-stage1](https://huggingface.co/r1char9/Oblivion2.5-1.5B-v1) | [Oblivion-stage2](#) | [Oblivion-stage3](#)  
