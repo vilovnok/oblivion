@@ -20,6 +20,7 @@ langgraph = "^0.3.21"
 langchain-ollama = "^0.3.0"
 ragas = "^0.2.15"
 sacrebleu = "^2.5.1"
+oxen = "^0.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
